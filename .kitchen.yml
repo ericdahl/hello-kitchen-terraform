@@ -2,27 +2,27 @@
 driver:
   name: terraform
 
-provisioner:
-  name: terraform
-  variable_files:
-    - testing.tfvars
+
 
 platforms:
-  - name: ubuntu
+  - name: aws
 
-transport:
-  name: ssh
-  ssh_key: ~/sync/keys/aws/ec2-temp-2017-04-21.pem
-
-verifier:
-  name: terraform
-  format: doc
-  groups:
-    - name: default
-      controls:
-        - operating_system
-      hostnames: public_dns
-      username: ubuntu
 
 suites:
   - name: default
+    verifier:
+      name: terraform
+      format: doc
+      groups:
+        - name: default
+          controls:
+            - operating_system
+          hostnames: public_dns
+          username: ubuntu
+    provisioner:
+      name: terraform
+      variable_files:
+        - testing.tfvars
+    transport:
+      name: ssh
+      ssh_key: ~/misc/keys/ecd/ec2-temp-2017-04-21.pem
